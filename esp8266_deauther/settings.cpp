@@ -1,5 +1,3 @@
-/* This software is licensed under the MIT License: https://github.com/spacehuhntech/esp8266_deauther */
-
 #include "settings.h"
 
 #include "A_config.h"     // Default Settings
@@ -90,11 +88,6 @@ namespace settings {
         JSON_FLAG(S_JSON_WEB_SPIFFS, data.web.use_spiffs);
         JSON_VALUE(S_JSON_LANG, data.web.lang);
 
-        // CLI
-        JSON_FLAG(S_JSON_SERIALINTERFACE, data.cli.enabled);
-        JSON_FLAG(S_JSON_SERIAL_ECHO, data.cli.serial_echo);
-
-
         str.setCharAt(str.length()-1, '}');
     }
 
@@ -167,9 +160,12 @@ namespace settings {
         data.web.use_spiffs     = WEB_USE_SPIFFS;
         memcpy(data.web.lang, DEFAULT_LANG, 3);
 
-        data.cli.enabled     = CLI_ENABLED;
-        data.cli.serial_echo = CLI_ECHO;
+//        data.cli.enabled     = CLI_ENABLED;
+//        data.cli.serial_echo = CLI_ECHO;
 
+//        data.led.enabled = USE_LED;
+//        data.display.enabled = USE_DISPLAY;
+//        data.display.timeout = DISPLAY_TIMEOUT;
 
         changed = true;
 
@@ -246,11 +242,6 @@ namespace settings {
         return data.web;
     }
 
-    const cli_settings_t& getCLISettings() {
-        return data.cli;
-    }
-
-
     // ===== SETTERS ===== //
 
     void setAllSettings(settings_t& newSettings) {
@@ -288,10 +279,4 @@ namespace settings {
         data.web = web;
         changed  = true;
     }
-
-    void setCLISettings(const cli_settings_t& cli) {
-        data.cli = cli;
-        changed  = true;
-    }
-
 }

@@ -1,5 +1,3 @@
-/* This software is licensed under the MIT License: https://github.com/spacehuhntech/esp8266_deauther */
-
 #pragma once
 
 #include <Arduino.h> // Arduino String, Serial
@@ -70,23 +68,6 @@ typedef struct web_settings_t {
     char lang[3];
 } web_settings_t;
 
-// ===== CLI ===== //
-typedef struct cli_settings_t {
-    bool enabled;
-    bool serial_echo;
-} cli_settings_t;
-
-// ===== LED ===== //
-typedef struct led_settings_t {
-    bool enabled;
-} led_settings_t;
-
-// ===== DISPLAY ===== //
-typedef struct display_settings_t {
-    bool     enabled;
-    uint32_t timeout;
-} display_settings_t;
-
 // ===== SETTINGS ===== //
 typedef struct settings_t {
     uint32_t                magic_num;
@@ -97,9 +78,6 @@ typedef struct settings_t {
     sniffer_settings_t      sniffer;
     access_point_settings_t ap;
     web_settings_t          web;
-    cli_settings_t          cli;
-    led_settings_t          led;
-    display_settings_t      display;
 } settings_t;
 
 namespace settings {
@@ -117,9 +95,6 @@ namespace settings {
     const sniffer_settings_t& getSnifferSettings();
     const access_point_settings_t& getAccessPointSettings();
     const web_settings_t& getWebSettings();
-    const cli_settings_t& getCLISettings();
-    const led_settings_t& getLEDSettings();
-    const display_settings_t& getDisplaySettings();
 
     void setAllSettings(settings_t& settings);
     void setAutosaveSettings(const autosave_settings_t& autosave);
@@ -128,7 +103,4 @@ namespace settings {
     void setSnifferSettings(const sniffer_settings_t& sniffer);
     void setAccessPointSettings(const access_point_settings_t& ap);
     void setWebSettings(const web_settings_t& web);
-    void setCLISettings(const cli_settings_t& cli);
-    void setLEDSettings(const led_settings_t& led);
-    void setDisplaySettings(const display_settings_t& display);
 }
