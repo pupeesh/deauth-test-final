@@ -1,10 +1,14 @@
+/* This software is licensed under the MIT License: https://github.com/spacehuhntech/esp8266_deauther */
+
 #include "CLI.h"
 
 #include <LittleFS.h>
 #include "settings.h"
 #include "wifi.h"
 
-CLI cli;
+/*
+   Shitty code used less resources so I will keep this clusterfuck as it is,
+ */
 
 CLI::CLI() {
     list  = new SimpleList<String>;
@@ -278,6 +282,8 @@ void CLI::runCommand(String input) {
         prntln(CLI_HELP_SEND_DEAUTH);
         prntln(CLI_HELP_SEND_BEACON);
         prntln(CLI_HELP_SEND_PROBE);
+        prntln(CLI_HELP_LED_A);
+        prntln(CLI_HELP_LED_B);
         prntln(CLI_HELP_DRAW);
         prntln(CLI_HELP_SCREEN_ON);
         prntln(CLI_HELP_SCREEN_MODE);
@@ -716,6 +722,13 @@ void CLI::runCommand(String input) {
         else if (eqls(str, S_JSON_SERIALINTERFACE)) prntln(settings::getCLISettings().enabled);
         else if (eqls(str, S_JSON_SERIAL_ECHO)) prntln(settings::getCLISettings().serial_echo);
 
+        // LED
+        else if (eqls(str, S_JSON_LEDENABLED)) prntln(settings::getLEDSettings().enabled);
+
+        // Display
+        else if (eqls(str, S_JSON_DISPLAYINTERFACE)) prntln(settings::getDisplaySettings().enabled);
+        else if (eqls(str, S_JSON_DISPLAY_TIMEOUT)) prntln(settings::getDisplaySettings().timeout);
+
         else {
             prnt(_tmp);
             prntln(" setting not found");
@@ -771,6 +784,13 @@ void CLI::runCommand(String input) {
         // CLI
         else if (eqls(str, S_JSON_SERIALINTERFACE)) newSettings.cli.enabled = boolVal;
         else if (eqls(str, S_JSON_SERIAL_ECHO)) newSettings.cli.serial_echo = boolVal;
+
+        // LED
+        else if (eqls(str, S_JSON_LEDENABLED)) newSettings.led.enabled = boolVal;
+
+        // Display
+        else if (eqls(str, S_JSON_DISPLAYINTERFACE)) newSettings.display.enabled = boolVal;
+        else if (eqls(str, S_JSON_DISPLAY_TIMEOUT)) newSettings.display.timeout = unsignedVal;
 
         else {
             prnt(str);

@@ -1,3 +1,5 @@
+/* This software is licensed under the MIT License: https://github.com/spacehuhntech/esp8266_deauther */
+
 #include "wifi.h"
 
 extern "C" {
@@ -14,6 +16,7 @@ extern "C" {
 #include "language.h"
 #include "debug.h"
 #include "settings.h"
+#include "CLI.h"
 #include "Attack.h"
 #include "Scan.h"
 
@@ -22,6 +25,7 @@ extern bool progmemToSpiffs(const char* adr, int len, String path);
 #include "webfiles.h"
 
 extern Scan   scan;
+extern CLI    cli;
 extern Attack attack;
 
 typedef enum wifi_mode_t {
@@ -81,7 +85,7 @@ namespace wifi {
     }
 
     void setChannel(uint8_t ch) {
-        if ((ch < 1) && (ch > 14)) {
+        if ((ch < 1) || (ch > 14)) {
             debuglnF("ERROR: Channel must be withing the range of 1-14");
         } else {
             ap_settings.channel = ch;
@@ -312,13 +316,14 @@ namespace wifi {
             server.on("/lang/ru.lang", HTTP_GET, []() {
                 sendProgmem(rulang, sizeof(rulang), W_JSON);
             });
-            server.on("/lang/en.lang", HTTP_GET, []() {
-                sendProgmem(enlang, sizeof(enlang), W_JSON);
+            server.on("/lang/bg.lang", HTTP_GET, []() {
+                sendProgmem(bglang, sizeof(bglang), W_JSON);
             });
         }
         server.on("/lang/default.lang", HTTP_GET, []() {
             if (!settings::getWebSettings().use_spiffs) {
-                if (String(settings::getWebSettings().lang) == "ru") sendProgmem(rulang, sizeof(rulang), W_JSON);
+                if (String(settings::getWebSettings().lang) == "bg") sendProgmem(bglang, sizeof(bglang), W_JSON);
+                else if (String(settings::getWebSettings().lang) == "ru") sendProgmem(rulang, sizeof(rulang), W_JSON);
                 else if (String(settings::getWebSettings().lang) == "en") sendProgmem(enlang, sizeof(enlang), W_JSON);
 
                 else handleFileRead("/web/lang/"+String(settings::getWebSettings().lang)+".lang");
@@ -332,6 +337,7 @@ namespace wifi {
         server.on("/run", HTTP_GET, []() {
             server.send(200, str(W_TXT), str(W_OK).c_str());
             String input = server.arg("cmd");
+            cli.exec(input);
         });
 
         server.on("/attack.json", HTTP_GET, []() {

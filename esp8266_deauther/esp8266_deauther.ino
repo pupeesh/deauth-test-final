@@ -6,6 +6,9 @@ extern "C" {
 
 #include "src/ArduinoJson-v5.13.5/ArduinoJson.h"
 #if ARDUINOJSON_VERSION_MAJOR != 5
+// The software was build using ArduinoJson v5.x
+// version 6 is still in beta at the time of writing
+// go to tools -> manage libraries, search for ArduinoJSON and install version 5
 #error Please upgrade/downgrade ArduinoJSON library to version 5!
 #endif // if ARDUINOJSON_VERSION_MAJOR != 5
 
@@ -17,7 +20,11 @@ extern "C" {
 #include "SSIDs.h"
 #include "Scan.h"
 #include "Attack.h"
+#include "CLI.h"
+//#include "DisplayUI.h"
 #include "A_config.h"
+
+//#include "led.h"
 
 // Run-Time Variables //
 Names names;
@@ -26,6 +33,10 @@ Accesspoints accesspoints;
 Stations     stations;
 Scan   scan;
 Attack attack;
+CLI    cli;
+//DisplayUI displayUI;
+
+//simplebutton::Button* resetButton;
 
 #include "wifi.h"
 
@@ -95,22 +106,39 @@ void setup() {
     // load everything else
     names.load();
     ssids.load();
+    cli.load();
 
     // create scan.json
     scan.setup();
+
+    // dis/enable serial command interface
+    if (settings::getCLISettings().enabled) {
+        cli.enable();
+    } else {
+        prntln(SETUP_SERIAL_WARNING);
+        Serial.flush();
+        Serial.end();
+    }
 
     // start access point/web interface
     if (settings::getWebSettings().enabled) wifi::startAP();
 
     // STARTED
     prntln(SETUP_STARTED);
+
+    // version
+    prntln(DEAUTHER_VERSION);
+
 }
 
 void loop() {
     currentTime = millis();
 
+//    led::update();   // update LED color
     wifi::update();  // manage access point
     attack.update(); // run attacks
+//    displayUI.update();
+    cli.update();    // read and run serial input
     scan.update();   // run scan
     ssids.update();  // run random mode, if enabled
 
@@ -126,5 +154,5 @@ void loop() {
     if (!booted) {
         booted = true;
         EEPROMHelper::resetBootNum(BOOT_COUNTER_ADDR);
-    }
+  }
 }
