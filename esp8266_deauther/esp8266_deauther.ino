@@ -21,10 +21,7 @@ extern "C" {
 #include "Scan.h"
 #include "Attack.h"
 #include "CLI.h"
-//#include "DisplayUI.h"
 #include "A_config.h"
-
-//#include "led.h"
 
 // Run-Time Variables //
 Names names;
@@ -34,9 +31,6 @@ Stations     stations;
 Scan   scan;
 Attack attack;
 CLI    cli;
-//DisplayUI displayUI;
-
-//simplebutton::Button* resetButton;
 
 #include "wifi.h"
 
@@ -126,18 +120,13 @@ void setup() {
     // STARTED
     prntln(SETUP_STARTED);
 
-    // version
-    prntln(DEAUTHER_VERSION);
-
 }
 
 void loop() {
     currentTime = millis();
 
-//    led::update();   // update LED color
     wifi::update();  // manage access point
     attack.update(); // run attacks
-//    displayUI.update();
     cli.update();    // read and run serial input
     scan.update();   // run scan
     ssids.update();  // run random mode, if enabled
