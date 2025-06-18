@@ -280,11 +280,7 @@ void CLI::runCommand(String input) {
         prntln(CLI_HELP_SEND_DEAUTH);
         prntln(CLI_HELP_SEND_BEACON);
         prntln(CLI_HELP_SEND_PROBE);
-        prntln(CLI_HELP_LED_A);
-        prntln(CLI_HELP_LED_B);
         prntln(CLI_HELP_DRAW);
-        prntln(CLI_HELP_SCREEN_ON);
-        prntln(CLI_HELP_SCREEN_MODE);
 
         prntln(CLI_HELP_FOOTER);
     }
@@ -720,13 +716,6 @@ void CLI::runCommand(String input) {
         else if (eqls(str, S_JSON_SERIALINTERFACE)) prntln(settings::getCLISettings().enabled);
         else if (eqls(str, S_JSON_SERIAL_ECHO)) prntln(settings::getCLISettings().serial_echo);
 
-        // LED
-        else if (eqls(str, S_JSON_LEDENABLED)) prntln(settings::getLEDSettings().enabled);
-
-        // Display
-        else if (eqls(str, S_JSON_DISPLAYINTERFACE)) prntln(settings::getDisplaySettings().enabled);
-        else if (eqls(str, S_JSON_DISPLAY_TIMEOUT)) prntln(settings::getDisplaySettings().timeout);
-
         else {
             prnt(_tmp);
             prntln(" setting not found");
@@ -783,13 +772,6 @@ void CLI::runCommand(String input) {
         else if (eqls(str, S_JSON_SERIALINTERFACE)) newSettings.cli.enabled = boolVal;
         else if (eqls(str, S_JSON_SERIAL_ECHO)) newSettings.cli.serial_echo = boolVal;
 
-        // LED
-        else if (eqls(str, S_JSON_LEDENABLED)) newSettings.led.enabled = boolVal;
-
-        // Display
-        else if (eqls(str, S_JSON_DISPLAYINTERFACE)) newSettings.display.enabled = boolVal;
-        else if (eqls(str, S_JSON_DISPLAY_TIMEOUT)) newSettings.display.timeout = unsignedVal;
-
         else {
             prnt(str);
             prntln(" not found");
@@ -812,7 +794,6 @@ void CLI::runCommand(String input) {
     // ===== STOP ===== //
     // stop [<mode>]
     else if (eqlsCMD(0, CLI_STOP)) {
-//        led::setMode(IDLE, true);
 
         if ((list->size() >= 2) && !(eqlsCMD(1, CLI_ALL))) {
             for (int i = 1; i < list->size(); i++) {
@@ -1096,7 +1077,6 @@ void CLI::runCommand(String input) {
             scan.update();   // run scan
             attack.update(); // run attacks
             ssids.update();  // run random mode, if enabled
-//            led::update();   // update LED color
 
             // auto-save
             if (settings::getAutosaveSettings().enabled && (currentTime - autosaveTime > settings::getAutosaveSettings().time)) {

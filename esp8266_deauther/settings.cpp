@@ -94,13 +94,6 @@ namespace settings {
         JSON_FLAG(S_JSON_SERIALINTERFACE, data.cli.enabled);
         JSON_FLAG(S_JSON_SERIAL_ECHO, data.cli.serial_echo);
 
-        // LED
-        JSON_FLAG(S_JSON_LEDENABLED, data.led.enabled);
-
-        // Display
-        JSON_FLAG(S_JSON_DISPLAYINTERFACE, data.display.enabled);
-        JSON_INT(S_JSON_DISPLAY_TIMEOUT, data.display.timeout);
-
         str.setCharAt(str.length()-1, '}');
     }
 
@@ -255,14 +248,6 @@ namespace settings {
         return data.cli;
     }
 
-    const led_settings_t& getLEDSettings() {
-        return data.led;
-    }
-
-    const display_settings_t& getDisplaySettings() {
-        return data.display;
-    }
-
     // ===== SETTERS ===== //
 
     void setAllSettings(settings_t& newSettings) {
@@ -304,15 +289,5 @@ namespace settings {
     void setCLISettings(const cli_settings_t& cli) {
         data.cli = cli;
         changed  = true;
-    }
-
-    void setLEDSettings(const led_settings_t& led) {
-        data.led = led;
-        changed  = true;
-    }
-
-    void setDisplaySettings(const display_settings_t& display) {
-        data.display = display;
-        changed      = true;
     }
 }
