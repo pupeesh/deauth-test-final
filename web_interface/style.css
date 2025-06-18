@@ -102,10 +102,7 @@ p{
 }
 
 footer {
-	font-size: .95em;
-	text-align: center;
-	margin-top: 3em;
-	margin-bottom: 3em;
+	display: none;
 }
 
 /* ===== CHECKBOX ===== */
