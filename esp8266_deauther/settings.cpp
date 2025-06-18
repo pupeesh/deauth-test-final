@@ -1,5 +1,3 @@
-/* This software is licensed under the MIT License: https://github.com/spacehuhntech/esp8266_deauther */
-
 #include "settings.h"
 
 #include "A_config.h"     // Default Settings
@@ -52,9 +50,6 @@ namespace settings {
         str.reserve(600);
 
         str += '{';
-
-        // Version
-        JSON_VALUE(S_JSON_VERSION, DEAUTHER_VERSION);
 
         // Autosave
         JSON_FLAG(S_JSON_AUTOSAVE, data.autosave.enabled);
@@ -109,9 +104,6 @@ namespace settings {
         // calc and check hash
         if (newData.magic_num == MAGIC_NUM) {
             data                  = newData;
-            data.version.major    = DEAUTHER_VERSION_MAJOR;
-            data.version.minor    = DEAUTHER_VERSION_MINOR;
-            data.version.revision = DEAUTHER_VERSION_REVISION;
             debuglnF("OK");
             save();
         } else {
@@ -134,10 +126,6 @@ namespace settings {
 
     void reset() {
         data.magic_num = MAGIC_NUM;
-
-        data.version.major    = DEAUTHER_VERSION_MAJOR;
-        data.version.minor    = DEAUTHER_VERSION_MINOR;
-        data.version.revision = DEAUTHER_VERSION_REVISION;
 
         data.attack.attack_all_ch         = ATTACK_ALL_CH;
         data.attack.random_tx             = RANDOM_TX;

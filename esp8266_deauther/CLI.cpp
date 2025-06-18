@@ -677,8 +677,6 @@ void CLI::runCommand(String input) {
 
         if (eqls(str, "settings")) settings::print();
 
-        // Version
-        else if (eqls(str, S_JSON_VERSION)) prntln(DEAUTHER_VERSION);
         else if (eqls(str, S_JSON_AUTOSAVE)) prntln(settings::getAutosaveSettings().enabled);
         else if (eqls(str, S_JSON_AUTOSAVETIME)) prntln(settings::getAutosaveSettings().time);
 
@@ -995,7 +993,6 @@ void CLI::runCommand(String input) {
     else if (eqlsCMD(0, CLI_INFO)) {
         prntln(CLI_INFO_HEADER);
         prnt(CLI_INFO_SOFTWARE);
-        prntln(DEAUTHER_VERSION);
         prntln(CLI_INFO_COPYRIGHT);
         prntln(CLI_INFO_LICENSE);
         prntln(CLI_INFO_ADDON);
