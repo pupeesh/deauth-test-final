@@ -14,23 +14,11 @@
 </head>
 
 <body onload="loadLang()">
-	<nav>
-		<ul class="menu">
-			<li><a href="scan.html" data-translate="scan">Scan</a></li>
-			<li><a href="ssids.html" data-translate="ssids">SSIDs</a></li>
-			<li><a href="attack.html" data-translate="attacks">Attack</a></li>
-			<li><a href="settings.html" data-translate="settings">Settings</a></li>
-		</ul>
-	</nav>
-
-	<div id="status"></div>
-
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
-
-				<h2>Disclaimer</h2>
-				<p data-translate="disclaimer">
+				<h1 class="header" data-translate="warning">WARNING</h1>
+				<p class="centered" data-translate="disclaimer">
 					This project is a proof of concept for testing and educational purposes.<br>
 					Neither the ESP8266, nor its SDK was meant or build for such purposes. Bugs can occur!<br>
 					<br>
@@ -39,7 +27,10 @@
 					It uses valid Wi-Fi frames described in the IEEE 802.11 standard and does not block or disrupt any
 					frequencies.<br>
 					Please check the legal regulations in your country before using it.<br>
-					<br>
+			</p>
+				<p class="centered bold">
+					<a class="button" href="scan.html" data-translate="disclaimer-button">I have read and understood the
+						notice above</a>
 				</p>
 			</div>
 		</div>
