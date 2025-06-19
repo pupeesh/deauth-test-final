@@ -1,0 +1,13 @@
+Instructions:
+1. Install Arduino IDE and Python
+2. Library installation (manually)
+	2.1 FOR WINDOWS!!! Copy contents of "windows" folder to C:\Users\<YourUserName>\AppData\Local\Arduino15\packages\ (need to enable show hidden folder)
+	2.1.1 Copy "deauther-esp8266" folder to C:\Users\<YourUserName>\Documents\Arduino\hardware\
+	2.2 FOR LINUX!!! Copy contents of "linux" to ~\.arduino15\packages
+	2.2.1 Copy "deauther-esp8266" folder to ~\Arduino\hardware
+	
+OR use install_libs script for the respective platform (install_libs.bat needs to be run as Admin)
+
+4. Go to "Tools -> Manage Libraries" then search for ArduinoJson by Benoit Blanchon and install version 5.13.5
+4. Go to "Tools -> Board" and select the board type, for my demonstration I'm using NodeMCU
+5. 
